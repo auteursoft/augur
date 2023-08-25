@@ -523,7 +523,7 @@ class User(Base):
     def get_repos(self, page=0, page_size=25, sort="repo_id", direction="ASC", search=None):
 
         from augur.util.repo_load_controller import RepoLoadController
-
+        logger.info("get repos")
         with DatabaseSession(logger) as session:
             result = RepoLoadController(session).paginate_repos("user", page, page_size, sort, direction, user=self, search=search)
 

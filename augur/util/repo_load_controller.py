@@ -130,9 +130,10 @@ class RepoLoadController:
 
         order_by = sort if sort else "repo_id"
         order_direction = direction if direction else "ASC"
-
+        logger.info("before generate query")
         query, query_args, result = self.generate_repo_query(source, count=False, order_by=order_by, direction=order_direction, 
                                     page=page, page_size=page_size, **kwargs)
+        logger.info("after generate query")
         if not query:
             return None, {"status": result["status"]}
 
@@ -142,8 +143,9 @@ class RepoLoadController:
         get_page_of_repos_sql = s.sql.text(query)
 
         with DatabaseEngine(connection_pool_size=1) as engine:
-
+            logger.info("before read_sql")
             results = pd.read_sql(get_page_of_repos_sql, engine, params=query_args)
+            logger.info("after read_sql")
 
         results['url'] = results['url'].apply(lambda datum: datum.split('//')[1])
 

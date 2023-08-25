@@ -52,6 +52,7 @@ table:
 @app.route('/')
 @app.route('/repos/views/table')
 def repo_table_view():
+    logger.info("Entered")
     query = request.args.get('q')
     try:
         page = int(request.args.get('p') or 0)
@@ -68,18 +69,24 @@ def repo_table_view():
             rev = True
     
     direction = "DESC" if rev else "ASC"
-
+    logger.info("gathered")
     config = AugurConfig(logger, db_session)
-
+    logger.info("config")
     pagination_offset = config.get_value("frontend", "pagination_offset")
-    
+    logger.info("paginated")
     if current_user.is_authenticated:
+        logger.info("is authenticated")
         data = current_user.get_repos(page = page, sort = sorting, direction = direction, search=query)[0]
+        logger.info("is got")
         page_count = (current_user.get_repo_count(search = query)[0] or 0) // pagination_offset
+        logger.info("is counted")
     else:
+        logger.info("is not authenticated")
         data = get_all_repos(page = page, sort = sorting, direction = direction, search=query)[0]
+        logger.info("is got")
         page_count = (get_all_repos_count(search = query)[0] or 0) // pagination_offset
-
+        logger.info("is counted")
+    logger.info("rendering")
     return render_module("repos-table", title="Repos", repos=data, query_key=query, activePage=page, pages=page_count, offset=pagination_offset, PS="repo_table_view", reverse = rev, sorting = sorting)
 
 """ ----------------------------------------------------------------
