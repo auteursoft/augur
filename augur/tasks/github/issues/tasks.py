@@ -32,6 +32,8 @@ def collect_issues(repo_git : str) -> int:
         logger.info(f'this is the manifest.key_auth value: {manifest.key_auth}')
 
         try:
+
+            the_api_key = key_handler.get_random_key(manifeset.key_auth)
         
             query = augur_db.session.query(Repo).filter(Repo.repo_git == repo_git)
             repo_obj = execute_session_query(query, 'one')
@@ -39,7 +41,7 @@ def collect_issues(repo_git : str) -> int:
 
             owner, repo = get_owner_repo(repo_git)
         
-            issue_data = retrieve_all_issue_data(repo_git, logger, manifest.key_auth)
+            issue_data = retrieve_all_issue_data(repo_git, logger, the_api_key)
 
 
             if issue_data:
