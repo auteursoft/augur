@@ -34,6 +34,7 @@ def collect_issues(repo_git : str) -> int:
         try:
 
             the_api_key = key_handler.get_random_key(manifeset.key_auth)
+            self.logger.info(f'this is the key: {the_api_key}')
         
             query = augur_db.session.query(Repo).filter(Repo.repo_git == repo_git)
             repo_obj = execute_session_query(query, 'one')
