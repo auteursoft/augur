@@ -68,6 +68,7 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
 
     # Check if 'data' is a list
     if isinstance(repos, list):
+        logger.info(f'LIST{repos}')
         # Process as a list of dictionaries
         for item in repos:
             if isinstance(item, dict):
@@ -79,6 +80,7 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
 
     # Check if 'data' is a dictionary
     elif isinstance(repos, dict):
+        logger.info(f'DICT{repos}')
         html_url = repos.get("html_url")
         if html_url:
             # Add the HTML URL to the repo_urls list
