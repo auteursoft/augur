@@ -65,7 +65,9 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
         repos.extend(page_data)
 
     try: 
-        logger.info(f'For repo in repos html_url etc: {[repo["html_url"] for repo in repos]}')
+        logger.info(f'For repo in repos html_url etc: {[repos["html_url"] for repo in repos]}')
+        goul = repos 
+        logger.info(f'repos: {goul}')
         repo_urls = [repo["html_url"] for repo in repos]
         logger.info(f'This is repo_urls {repo_urls}')
     except Exception as e: 
