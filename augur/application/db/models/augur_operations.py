@@ -80,6 +80,7 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
                     logger.info(f'This is a URL: {url}')
             elif isinstance(item, list):
                 repo_urls = map(lambda x: x.get('html_url'), repos)
+                repo_urls = dict(eumerate(repo_urls))
                 logger.info(f'these are the repo_urls from a list of lists: {repo_urls}')
                 # html_url = item.get('html_url')
                 # if html_url:
