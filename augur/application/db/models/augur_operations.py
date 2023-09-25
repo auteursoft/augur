@@ -64,26 +64,44 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
 
         repos.extend(page_data)
 
-    try: 
-        #logger.info(f'For repo in repos html_url etc: {[repos["html_url"] for repo in repos]}')
-        goul = repos 
-        logger.info(f'repos: {goul}')
-        repo_urls = [item["html_url"] for item in repos]
-        repo_urls = [repo["html_url"] for repo in repos]
-        logger.info(f'This is repo_urls {repo_urls}')
-    except Exception as e: 
-        logger.info(f'exception: {e}')
-        stacker = traceback.format_exc()
-        logger.info(f"\n\n{stacker}\n\n")
+     # Assume 'data' is the result from retrieve_dict_from_endpoint
+    # data = retrieve_dict_from_endpoint(logger, session.oauths, url)
 
-    try: 
+    # Initialize an empty list to store the repo URLs
+    # repo_urls = []
 
-        return repo_urls, {"status": "success", "owner_type": owner_type}
-    except Exception as e: 
-        logger.info(f'exception 2: {e}')
-        stacker = traceback.format_exc()
-        logger.info(f"\n\n{stacker}\n\n")        
+    # Check if 'data' is a list
+    if isinstance(repos, list):
+        # Process as a list of dictionaries
+        for item in repos:
+            if isinstance(item, dict):
+                html_url = item.get("html_url")
+                if html_url:
+                    # Add the HTML URL to the repo_urls list
+                    repo_urls.append(html_url)
 
+    # Check if 'data' is a dictionary
+    elif isinstance(data, dict):
+        html_url = repos.get("html_url")
+        if html_url:
+            # Add the HTML URL to the repo_urls list
+            repo_urls.append(html_url)
+
+    # Handle other data types or cases
+    else:
+        print(f"Unexpected data type: {type(repos)}")
+
+    # Print the repo URLs
+    for url in repo_urls:
+        print(url)
+
+    # goul = repos 
+    # logger.info(f'repos: {goul}')
+    # #repo_urls = [item["html_url"] for item in repos]
+    # repo_urls = [repo["html_url"] for repo in repos]
+    # logger.info(f'This is repo_urls {repo_urls}')
+
+    return repo_urls, {"status": "success", "owner_type": owner_type}
 
 metadata = Base.metadata
 
