@@ -79,12 +79,14 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
                     repo_urls.append(html_url)
                     logger.info(f'This is a URL: {url}')
             elif isinstance(item, list):
-                html_url = item.get('html_url')
-                if html_url:
-                    # Add the HTML URL to the repo_urls list
-                    logger.info(f'html url from list of lists: {html_url}')
-                    repo_urls.append(html_url)
-                    logger.info(f'This is a URL: {url}')                
+                repo_urls = map(lambda x: x.get('html_url'), repos)
+                logger.info(f'these are the repo_urls from a list of lists: {repo_urls}')
+                # html_url = item.get('html_url')
+                # if html_url:
+                #     # Add the HTML URL to the repo_urls list
+                #     logger.info(f'html url from list of lists: {html_url}')
+                #     repo_urls.append(html_url)
+                #     logger.info(f'This is a URL: {url}')                
 
     # Check if 'data' is a dictionary
     elif isinstance(repos, dict):
