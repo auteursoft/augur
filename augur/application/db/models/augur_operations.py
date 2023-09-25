@@ -89,11 +89,11 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
 
     # Handle other data types or cases
     else:
-        print(f"Unexpected data type: {type(repos)}")
+        logger.info(f"Unexpected data type: {type(repos)}")
 
     # Print the repo URLs
     for url in repo_urls:
-        print(url)
+        logger.info(f'This is a URL: {url}')
 
     # goul = repos 
     # logger.info(f'repos: {goul}')
