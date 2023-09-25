@@ -64,6 +64,9 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
 
         repos.extend(page_data)
 
+    repo_urls = []
+
+    # Check if 'data' is a list
     if isinstance(repos, list):
         # Process as a list of dictionaries
         for item in repos:
