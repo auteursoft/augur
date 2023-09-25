@@ -74,6 +74,7 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
                 html_url = item.get("html_url")
                 if html_url:
                     # Add the HTML URL to the repo_urls list
+                    logger.info(f'html url from list: {html_url}')
                     repo_urls.append(html_url)
 
     # Check if 'data' is a dictionary
@@ -81,6 +82,7 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
         html_url = repos.get("html_url")
         if html_url:
             # Add the HTML URL to the repo_urls list
+            logger.info(f'html url from dict: {html_url}')
             repo_urls.append(html_url)
 
     # Handle other data types or cases
