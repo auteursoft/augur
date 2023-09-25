@@ -77,7 +77,7 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
                     repo_urls.append(html_url)
 
     # Check if 'data' is a dictionary
-    elif isinstance(data, dict):
+    elif isinstance(repos, dict):
         html_url = repos.get("html_url")
         if html_url:
             # Add the HTML URL to the repo_urls list
