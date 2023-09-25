@@ -65,7 +65,7 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
         repos.extend(page_data)
 
     try: 
-        logger.info(f'For repo in repos html_url etc: {[repos["html_url"] for repo in repos]}')
+        #logger.info(f'For repo in repos html_url etc: {[repos["html_url"] for repo in repos]}')
         goul = repos 
         logger.info(f'repos: {goul}')
         repo_urls = [repo["html_url"] for repo in repos]
@@ -75,7 +75,13 @@ def retrieve_owner_repos(session, owner: str) -> List[str]:
         stacker = traceback.format_exc()
         logger.info(f"\n\n{stacker}\n\n")
 
-    return repo_urls, {"status": "success", "owner_type": owner_type}
+    try: 
+
+        return repo_urls, {"status": "success", "owner_type": owner_type}
+    except Exception as e: 
+        logger.info(f'exception 2: {e}')
+        stacker = traceback.format_exc()
+        logger.info(f"\n\n{stacker}\n\n")        
 
 
 metadata = Base.metadata
